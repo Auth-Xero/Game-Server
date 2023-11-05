@@ -45,7 +45,7 @@ public class GameLoader {
                 Class<?> gameClass = Class.forName(className, true, classLoader);
 
                 if (Game.class.isAssignableFrom(gameClass)) {
-                    Game game = (Game) gameClass.getDeclaredConstructor().newInstance();
+                    Game game = (Game) gameClass.getDeclaredConstructor(String.class).newInstance("dummy");
                     GameHelper.addGame(game);
                 }
             }

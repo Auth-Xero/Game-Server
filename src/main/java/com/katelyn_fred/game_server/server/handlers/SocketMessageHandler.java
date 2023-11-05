@@ -88,7 +88,6 @@ public class SocketMessageHandler {
                         data[startIndex + 2] = Integer.toString(gameRoom.getGame().getId());
                         data[startIndex + 3] = gameRoom.getGame().getName();
                     }
-
                     SocketMessage socketMessage = new SocketMessage(3, data);
                     client.sendMessage(socketMessage.toString());
                     return;
@@ -102,6 +101,25 @@ public class SocketMessageHandler {
                     Game game = gameRoom.getGame();
                     if(!game.isStarted()) return;
                     game.playTurn(gameUser, turnData);
+                    return;
+                }
+                case 5: {
+                    List<Game> games = new ArrayList<>(GameHelper.getGameList().values());
+                    int numberOfGames = games.size();
+                    String[] data = new String[numberOfGames * 5 + 1];
+                    data[0] = Integer.toString(numberOfGames);
+
+                    for (int i = 0; i < numberOfGames; i++) {
+                        Game game = games.get(i);
+                        int startIndex = i * 5 + 1;
+                        data[startIndex] = Integer.toString(game.getId());
+                        data[startIndex + 1] = game.getName();
+                        data[startIndex + 2] = Integer.toString(game.getRequiredPlayerCount());
+                        data[startIndex + 3] = Integer.toString(game.getMaxPlayerCount());
+                        data[startIndex + 4] = game.getDescription();
+                    }
+                    SocketMessage socketMessage = new SocketMessage(5, data);
+                    client.sendMessage(socketMessage.toString());
                     return;
                 }
             }

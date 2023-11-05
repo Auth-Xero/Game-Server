@@ -5,6 +5,7 @@ import com.katelyn_fred.game_server.server.types.GameUser;
 
 public interface Game {
     String getName();
+    String getDescription();
     int getId();
     int getRequiredPlayerCount();
     int getMaxPlayerCount();
